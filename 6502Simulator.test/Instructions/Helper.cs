@@ -163,15 +163,14 @@ public static class Helper
         cpu.ExecuteNextInstruction(memory);
 
         var registerValue = typeof(Cpu).GetProperty(registerToTest)?.GetValue(cpu);
-
-        Assert.That(registerValue, Is.EqualTo(testValue));
-        Assert.That(cpu.Flag.Zero, Is.True);
-        Assert.That(cpu.Flag.Negative, Is.False);
-
+        Assert.Multiple(() =>
+        {
+            Assert.That(registerValue, Is.EqualTo(testValue));
+            Assert.That(cpu.Flag.Zero, Is.True);
+            Assert.That(cpu.Flag.Negative, Is.False);
+        });
         VerifyUnmodifiedFlagsFromLoadRegister(cpuBefore, cpu);
     }
-
-
 
     public static void TestLoadRegisterAffectsNegativeFlag(OpCode upCodeToTest, AddressMode addressMode, string registerToTest, Cpu cpu, Memory memory)
     {
@@ -187,23 +186,24 @@ public static class Helper
         cpu.ExecuteNextInstruction(memory);
 
         var registerValue = typeof(Cpu).GetProperty(registerToTest)?.GetValue(cpu);
-
-        Assert.That(registerValue, Is.EqualTo(testValue));
-        Assert.That(cpu.Flag.Zero, Is.False);
-        Assert.That(cpu.Flag.Negative, Is.True);
-
+        Assert.Multiple(() =>
+        {
+            Assert.That(registerValue, Is.EqualTo(testValue));
+            Assert.That(cpu.Flag.Zero, Is.False);
+            Assert.That(cpu.Flag.Negative, Is.True);
+        });
         VerifyUnmodifiedFlagsFromLoadRegister(cpuBefore, cpu);
     }
 
-
-
-
     private static void VerifyUnmodifiedFlagsFromLoadRegister(Cpu cpuBefore, Cpu cpu)
     {
-        Assert.That(cpuBefore.Flag.Carry, Is.EqualTo(cpu.Flag.Carry));
-        Assert.That(cpuBefore.Flag.InterruptDisable, Is.EqualTo(cpu.Flag.InterruptDisable));
-        Assert.That(cpuBefore.Flag.DecimalMode, Is.EqualTo(cpu.Flag.DecimalMode));
-        Assert.That(cpuBefore.Flag.BreakMode, Is.EqualTo(cpu.Flag.BreakMode));
-        Assert.That(cpuBefore.Flag.Overflow, Is.EqualTo(cpu.Flag.Overflow));
+        Assert.Multiple(() =>
+        {
+            Assert.That(cpuBefore.Flag.Carry, Is.EqualTo(cpu.Flag.Carry));
+            Assert.That(cpuBefore.Flag.InterruptDisable, Is.EqualTo(cpu.Flag.InterruptDisable));
+            Assert.That(cpuBefore.Flag.DecimalMode, Is.EqualTo(cpu.Flag.DecimalMode));
+            Assert.That(cpuBefore.Flag.BreakMode, Is.EqualTo(cpu.Flag.BreakMode));
+            Assert.That(cpuBefore.Flag.Overflow, Is.EqualTo(cpu.Flag.Overflow));
+        });
     }
 }

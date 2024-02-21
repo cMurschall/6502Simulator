@@ -27,7 +27,7 @@ public static class CpuExtensions
 
     public static ushort GetZeroPageAddressY(this Cpu cpu, Memory memory)
     {
-        var address = cpu.FetchByte(memory);
+        ushort address = cpu.FetchByte(memory);
         address += cpu.RegisterY;
 
         return address;
