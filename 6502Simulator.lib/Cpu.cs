@@ -125,11 +125,12 @@ public class Cpu
     }
 
 
-    public void ExecuteNextInstruction(Memory memory)
+    public int ExecuteNextInstruction(Memory memory)
     {
         byte instructionByte = FetchByte(memory);
         var instruction = GetInstruction(instructionByte);
         instruction.Execute(this, memory);
+        return instruction.RequiredCycles;
     }
 
 
