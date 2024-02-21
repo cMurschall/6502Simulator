@@ -63,6 +63,10 @@ public interface IInstruction
             new Txa(),
             new Txs(),
             new Tya(),
+            new Pha(),
+            new Php(),
+            new Pla(),
+            new Plp(),
         };
     }
 }

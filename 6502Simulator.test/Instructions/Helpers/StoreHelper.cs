@@ -18,7 +18,7 @@ namespace m6502Simulator.test.Instructions.Helpers
             // so we can check at the updated memory address
             var writtenAddress = Helper.WriteValue((byte)(testValue + 1), cpu, memory, addressMode);
 
-            var cpuBefore = cpu;
+            var cpuBefore = cpu.Clone();
             cpu.ExecuteNextInstruction(memory);
 
             var registerValueAfter = typeof(Cpu).GetProperty(registerToTest)?.GetValue(cpu);

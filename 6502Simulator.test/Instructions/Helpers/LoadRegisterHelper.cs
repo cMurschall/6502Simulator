@@ -14,7 +14,7 @@ namespace m6502Simulator.test.Instructions.Helpers
             var testValue = Random.Shared.NextByte();
             Helper.WriteValue(testValue, cpu, memory, addressMode);
 
-            var cpuBefore = cpu;
+            var cpuBefore = cpu.Clone();
             cpu.ExecuteNextInstruction(memory);
 
             var registerValue = typeof(Cpu).GetProperty(registerToTest)?.GetValue(cpu);
@@ -33,7 +33,7 @@ namespace m6502Simulator.test.Instructions.Helpers
             cpu.Flag.Zero = false;
             cpu.Flag.Negative = true;
 
-            var cpuBefore = cpu;
+            var cpuBefore = cpu.Clone();
             cpu.ExecuteNextInstruction(memory);
 
             var registerValue = typeof(Cpu).GetProperty(registerToTest)?.GetValue(cpu);
@@ -56,7 +56,7 @@ namespace m6502Simulator.test.Instructions.Helpers
             cpu.Flag.Zero = true;
             cpu.Flag.Negative = false;
 
-            var cpuBefore = cpu;
+            var cpuBefore = cpu.Clone();
             cpu.ExecuteNextInstruction(memory);
 
             var registerValue = typeof(Cpu).GetProperty(registerToTest)?.GetValue(cpu);

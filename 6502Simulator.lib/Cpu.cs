@@ -27,13 +27,20 @@ public class Cpu
     public byte RegisterX { get; set; }
     public byte RegisterY { get; set; }
 
+
+    public byte ProcessorStatus
+    {
+        get => Flag.ProcessorStatus;
+        set => Flag.ProcessorStatus = value;
+    }
+
     public StatusFlag Flag { get; set; } = new();
 
     public void Reset(ushort resetVector)
     {
         ProgramCounter = resetVector;
         StackPointer = 0xFF;
-        Flag.ProcessorStatus = 0;
+        ProcessorStatus = 0;
         RegisterA = RegisterX = RegisterY = 0;
     }
 
@@ -93,14 +100,13 @@ public class Cpu
         StackPointer--;
     }
 
-    void PushByteOnStack(byte value, Memory memory)
+    public void PushByteOnStack(byte value, Memory memory)
     {
         WriteByte(value, StackPointerToAddress(), memory);
-
         StackPointer--;
     }
 
-    ushort PopWordFromStack(Memory memory)
+    public ushort PopWordFromStack(Memory memory)
     {
         var stackPointerAddress = StackPointerToAddress();
         var value = ReadWord((ushort)(stackPointerAddress + 1), memory);
@@ -109,7 +115,7 @@ public class Cpu
         return value;
     }
 
-    byte PopByteFromStack(Memory memory)
+    public byte PopByteFromStack(Memory memory)
     {
         StackPointer++;
 
@@ -148,4 +154,7 @@ public class Cpu
 
         throw new Exception($"Could not find an instruction for 0x{instructionByte:X2}.");
     }
+
+
+    public Cpu Clone() => (Cpu) this.MemberwiseClone();
 }
