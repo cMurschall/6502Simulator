@@ -10,7 +10,7 @@ using m6502Simulator.lib;
 
 namespace _6502Simulator.test.Instructions
 {
-    public class Ldx : CpuTestBase
+    public class LdxTest : CpuTestBase
     {
 
         [Test]
