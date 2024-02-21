@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace m6502Simulator.test;
 
 [TestFixture]
-public class IInstructionTest
+public class InstructionTest
 {
     [Test]
     public void OpCodesAreUnique()

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using m6502Simulator.lib;
 
-namespace _6502Simulator.test.Instructions
+namespace m6502Simulator.test.Instructions
 {
     public class LdxTest : CpuTestBase
     {
