@@ -1,5 +1,4 @@
 ﻿using m6502Simulator.lib;
-using NUnit.Framework;
 
 namespace m6502Simulator.test.Instructions.Helpers;
 

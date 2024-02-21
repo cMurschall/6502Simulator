@@ -3,40 +3,53 @@ using NUnit.Framework;
 
 namespace m6502Simulator.test.Instructions.Helpers
 {
-    public static class LoadRegisterHelper
+    public static class TransferHelper
     {
 
-        public static void TestLoadRegister(OpCode upCodeToTest, AddressMode addressMode, string registerToTest, Cpu cpu, Memory memory)
+
+
+        public static void TestTransferRegister(OpCode upCodeToTest, string registerSource, string registerTarget, Cpu cpu, Memory memory)
         {
-            memory[0xFFFC] = (byte)upCodeToTest;
             cpu.Flag.ProcessorStatus = Random.Shared.NextByte();
 
-            var testValue = Random.Shared.NextByte();
-            Helper.WriteValue(testValue, cpu, memory, addressMode);
+            var testValue = Random.Shared.NextByte(0xFE);
+            memory[0xFFFC] = (byte)upCodeToTest;
+            memory[0xFFFD] = testValue;
+
+            typeof(Cpu).GetProperty(registerSource)?.SetValue(cpu, testValue);
+            typeof(Cpu).GetProperty(registerTarget)?.SetValue(cpu, (byte)0xFF);
 
             var cpuBefore = cpu;
             cpu.ExecuteNextInstruction(memory);
 
-            var registerValue = typeof(Cpu).GetProperty(registerToTest)?.GetValue(cpu);
+            var registerValue = typeof(Cpu).GetProperty(registerTarget)?.GetValue(cpu);
 
             Assert.That(registerValue, Is.EqualTo(testValue));
             VerifyUnmodifiedFlagsFromLoadRegister(cpuBefore, cpu);
         }
 
-        public static void TestLoadRegisterAffectsZeroFlag(OpCode upCodeToTest, AddressMode addressMode, string registerToTest, Cpu cpu, Memory memory)
+        public static void TestTransferRegisterAffectsZeroFlag(OpCode upCodeToTest, string registerSource, string registerTarget, Cpu cpu, Memory memory)
         {
-            memory[0xFFFC] = (byte)upCodeToTest;
-            byte testValue = 0;
 
-            Helper.WriteValue(testValue, cpu, memory, addressMode);
+
+            cpu.Flag.ProcessorStatus = Random.Shared.NextByte();
+
+            byte testValue = 0;
+            memory[0xFFFC] = (byte)upCodeToTest;
+            memory[0xFFFD] = testValue;
 
             cpu.Flag.Zero = false;
             cpu.Flag.Negative = true;
 
+            typeof(Cpu).GetProperty(registerSource)?.SetValue(cpu, testValue);
+            typeof(Cpu).GetProperty(registerTarget)?.SetValue(cpu, (byte)0xFF);
+
             var cpuBefore = cpu;
             cpu.ExecuteNextInstruction(memory);
 
-            var registerValue = typeof(Cpu).GetProperty(registerToTest)?.GetValue(cpu);
+            var registerValue = typeof(Cpu).GetProperty(registerTarget)?.GetValue(cpu);
+
+            Assert.That(registerValue, Is.EqualTo(testValue));
             Assert.Multiple(() =>
             {
                 Assert.That(registerValue, Is.EqualTo(testValue));
@@ -46,20 +59,28 @@ namespace m6502Simulator.test.Instructions.Helpers
             VerifyUnmodifiedFlagsFromLoadRegister(cpuBefore, cpu);
         }
 
-        public static void TestLoadRegisterAffectsNegativeFlag(OpCode upCodeToTest, AddressMode addressMode, string registerToTest, Cpu cpu, Memory memory)
+        public static void TestTransferRegisterAffectsNegativeFlag(OpCode upCodeToTest, string registerSource, string registerTarget, Cpu cpu, Memory memory)
         {
-            memory[0xFFFC] = (byte)upCodeToTest;
+
             byte testValue = 0b1000_0000;
 
-            Helper.WriteValue(testValue, cpu, memory, addressMode);
+            memory[0xFFFC] = (byte)upCodeToTest;
+            memory[0xFFFD] = testValue;
 
             cpu.Flag.Zero = true;
             cpu.Flag.Negative = false;
 
+
+            typeof(Cpu).GetProperty(registerSource)?.SetValue(cpu, testValue);
+            typeof(Cpu).GetProperty(registerTarget)?.SetValue(cpu, (byte)0xFF);
+
+
+
             var cpuBefore = cpu;
             cpu.ExecuteNextInstruction(memory);
 
-            var registerValue = typeof(Cpu).GetProperty(registerToTest)?.GetValue(cpu);
+            var registerValue = typeof(Cpu).GetProperty(registerTarget)?.GetValue(cpu);
+
             Assert.Multiple(() =>
             {
                 Assert.That(registerValue, Is.EqualTo(testValue));
@@ -80,6 +101,7 @@ namespace m6502Simulator.test.Instructions.Helpers
                 Assert.That(cpuBefore.Flag.Overflow, Is.EqualTo(cpu.Flag.Overflow));
             });
         }
+
 
     }
 }

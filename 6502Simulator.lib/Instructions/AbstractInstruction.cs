@@ -27,21 +27,18 @@ public interface IInstruction
             new LdaZeroPageX(),
             new LdaIndirectX(),
             new LdaIndirectY(),
-
             // ldx
             new LdxImmediate(),
             new LdxAbsolute(),
             new LdxAbsoluteY(),
             new LdxZeroPage(),
             new LdxZeroPageY(),
-
             // ldy
             new LdyImmediate(),
             new LdyAbsolute(),
             new LdyAbsoluteX(),
             new LdyZeroPage(),
             new LdyZeroPageX(),
-
             // sta
             new StaAbsolute(),
             new StaAbsoluteX(),
@@ -50,20 +47,22 @@ public interface IInstruction
             new StaZeroPageX(),
             new StaIndirectX(),
             new StaIndirectY(),
-
             //stx
             new StxAbsolute(),
             new StxZeroPage(),
             new StxZeroPageY(),
-
             // sty
             new StyAbsolute(),
             new StyZeroPage(),
             new StyZeroPageY(),
 
-
+            // transfers
+            new Tax(),
+            new Tay(),
+            new Tsx(),
+            new Txa(),
+            new Txs(),
+            new Tya(),
         };
     }
 }
-
-
