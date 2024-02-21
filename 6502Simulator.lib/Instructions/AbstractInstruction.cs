@@ -67,6 +67,15 @@ public interface IInstruction
             new Php(),
             new Pla(),
             new Plp(),
+
+            // shifts
+            new Asl(),
+            new AslAbsolute(),
+            new AslAbsoluteX(),
+            new AslZeroPage(),
+            new AslZeroPageX(),
         };
     }
 }
+
+

@@ -5,6 +5,7 @@ namespace m6502Simulator.test.Instructions.Helpers;
 
 public enum AddressMode
 {
+    Accumulator,
     Immediate,
     Absolute,
     AbsoluteX,
@@ -42,6 +43,7 @@ public static class Helper
     {
         return addressMode switch
         {
+            AddressMode.Accumulator => WriteAccumulatorValue(value, cpu),
             AddressMode.Immediate => WriteImmediateValue(value, memory, startAddress),
             AddressMode.Absolute => WriteAbsoluteValue(value, memory, startAddress),
             AddressMode.AbsoluteX => WriteAbsoluteXValue(value, cpu, memory, startAddress),
@@ -55,6 +57,11 @@ public static class Helper
         };
     }
 
+    private static ushort WriteAccumulatorValue(byte value, Cpu cpu)
+    {
+        cpu.RegisterA = value;
+        return cpu.RegisterA;
+    }
     private static ushort WriteImmediateValue(byte value, Memory memory, ushort startAddress)
     {
         memory[startAddress] = value;
