@@ -26,14 +26,7 @@ namespace m6502Simulator.test.Instructions.Helpers
             var cpuBefore = cpu.Clone();
             cpu.ExecuteNextInstruction(memory);
 
-            if (addressMode == AddressMode.Accumulator)
-            {
-                Assert.That(cpu.RegisterA, Is.EqualTo(2));
-            }
-            else
-            {
-                Assert.That(memory[targetAddress], Is.EqualTo(2));
-            }
+            Assert.That(addressMode == AddressMode.Accumulator ? cpu.RegisterA : memory[targetAddress], Is.EqualTo(2));
 
             Assert.That(cpu.Flag.Carry, Is.False);
             Assert.That(cpu.Flag.Negative, Is.False);
@@ -57,14 +50,7 @@ namespace m6502Simulator.test.Instructions.Helpers
             var cpuBefore = cpu.Clone();
             cpu.ExecuteNextInstruction(memory);
 
-            if (addressMode == AddressMode.Accumulator)
-            {
-                Assert.That(cpu.RegisterA, Is.EqualTo(0b10000100));
-            }
-            else
-            {
-                Assert.That(memory[targetAddress], Is.EqualTo(0b10000100));
-            }
+            Assert.That(addressMode == AddressMode.Accumulator ? cpu.RegisterA : memory[targetAddress], Is.EqualTo(0b10000100));
             Assert.That(cpu.Flag.Carry, Is.True);
             Assert.That(cpu.Flag.Negative, Is.True);
             Assert.That(cpu.Flag.Zero, Is.False);

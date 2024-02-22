@@ -12,6 +12,7 @@ public interface IInstruction
     public OpCode OpCode { get; }
 
     public int RequiredCycles { get; }
+
     public void Execute(Cpu cpu, Memory memory);
 
     static IReadOnlyList<IInstruction> GetInstructions()
@@ -74,6 +75,12 @@ public interface IInstruction
             new AslAbsoluteX(),
             new AslZeroPage(),
             new AslZeroPageX(),
+
+            new Lsr(),
+            new LsrAbsolute(),
+            new LsrAbsoluteX(),
+            new LsrZeroPage(),
+            new LsrZeroPageX(),
         };
     }
 }

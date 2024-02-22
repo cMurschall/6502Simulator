@@ -34,7 +34,7 @@ public class Cpu
         set => Flag.ProcessorStatus = value;
     }
 
-    public StatusFlag Flag { get; set; } = new();
+    public StatusFlag Flag { get; } = new();
 
     public void Reset(ushort resetVector)
     {
