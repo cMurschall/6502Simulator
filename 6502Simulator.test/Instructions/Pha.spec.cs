@@ -7,15 +7,14 @@ using m6502Simulator.lib;
 using m6502Simulator.test.Instructions.Helpers;
 using NUnit.Framework;
 
-namespace m6502Simulator.test.Instructions
-{
-    public class PhaTest : CpuTestBase
-    {
+namespace m6502Simulator.test.Instructions;
 
-        [Test]
-        public void Pha_TransfersRegisterAToStack()
-        {
-            TransferHelper.TestTransferToStack(OpCode.PHA, nameof(Cpu.RegisterA), Cpu, Memory);
-        }
+public class PhaTest : CpuTestBase
+{
+
+    [Test]
+    public void Pha_TransfersRegisterAToStack()
+    {
+        TransferHelper.TestTransferToStack(OpCode.PHA, nameof(Cpu.RegisterA), Cpu, Memory);
     }
 }

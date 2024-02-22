@@ -7,14 +7,13 @@ using m6502Simulator.lib;
 using m6502Simulator.test.Instructions.Helpers;
 using NUnit.Framework;
 
-namespace m6502Simulator.test.Instructions
+namespace m6502Simulator.test.Instructions;
+
+public class PlpTest : CpuTestBase
 {
-    public class PlpTest : CpuTestBase
+    [Test]
+    public void Plp_PullsProcessorStatusFromStack()
     {
-        [Test]
-        public void Plp_PullsProcessorStatusFromStack()
-        {
-            TransferHelper.TestTransferFromStack(OpCode.PLP, nameof(Cpu.ProcessorStatus), Cpu, Memory);
-        }
+        TransferHelper.TestTransferFromStack(OpCode.PLP, nameof(Cpu.ProcessorStatus), Cpu, Memory);
     }
 }

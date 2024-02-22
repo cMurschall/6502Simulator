@@ -7,15 +7,14 @@ using m6502Simulator.lib;
 using m6502Simulator.test.Instructions.Helpers;
 using NUnit.Framework;
 
-namespace m6502Simulator.test.Instructions
-{
-    public class PhpTest : CpuTestBase
-    {
+namespace m6502Simulator.test.Instructions;
 
-        [Test]
-        public void Pha_TransfersProcessorStatusToStack()
-        {
-            TransferHelper.TestTransferToStack(OpCode.PHP, nameof(Cpu.ProcessorStatus), Cpu, Memory);
-        }
+public class PhpTest : CpuTestBase
+{
+
+    [Test]
+    public void Pha_TransfersProcessorStatusToStack()
+    {
+        TransferHelper.TestTransferToStack(OpCode.PHP, nameof(Cpu.ProcessorStatus), Cpu, Memory);
     }
 }

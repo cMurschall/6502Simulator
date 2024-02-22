@@ -81,8 +81,16 @@ public interface IInstruction
             new LsrAbsoluteX(),
             new LsrZeroPage(),
             new LsrZeroPageX(),
+
+            // rotation
+            new Rol(),
+            new RolAbsolute(),
+            new RolAbsoluteX(),
+            new RolZeroPage(),
+            new RolZeroPageX()
         };
     }
 }
+
 
 
